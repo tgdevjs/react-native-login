@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Header } from './components/common';
+import { Header, Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
 import firebase from 'firebase';
 import { config } from '../config/firebaseConfig';
@@ -13,7 +13,7 @@ class App extends Component {
       if (user) {
         this.setState({ loggedIn: true });
       }else{
-        this.setState({LoggedIn: false });
+        this.setState({ loggedIn: false });
       }
     });
   }
