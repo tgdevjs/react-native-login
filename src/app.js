@@ -6,14 +6,32 @@ import firebase from 'firebase';
 import { config } from '../config/firebaseConfig';
 
 class App extends Component {
+  state = { loggedIn: null };
   componentWillMount() {
     firebase.initializeApp(config);
+    firebase.auth().onAuthStateChanged( (user) => {
+      if (user) {
+        this.setState({ loggedIn: true });
+      }else{
+        this.setState({LoggedIn: false });
+      }
+    });
+  }
+  renderContent() {
+    switch (this.state.loggedIn) {
+      case true:
+        return <Button onPress={() => firebase.auth().signOut() }>Log Out</Button>
+      case false:
+        return <LoginForm />;
+      default:
+        return <Spinner size="large" />;
+    }
   }
   render() {
     return (
       <View>
         <Header headerText="Authentication" />
-        <LoginForm />
+        {this.renderContent()}
       </View>
     )
   }
